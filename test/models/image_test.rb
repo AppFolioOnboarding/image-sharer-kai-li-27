@@ -24,4 +24,15 @@ class ImageTest < ActiveSupport::TestCase
 
     assert_predicate image, :valid?
   end
+
+  test 'Image can be saved tags' do
+    image = Image.new(url: 'https://asd')
+    image.tag_list.add('tag')
+
+    image.save!
+
+    image = Image.last
+
+    assert_equal 'tag', image.tag_list.first
+  end
 end
