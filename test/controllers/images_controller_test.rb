@@ -5,7 +5,6 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     get images_path
 
     assert_response :ok
-    assert_select 'h1', 'hello world'
     assert_select 'a' do
       assert_select '[href=?]', new_image_path
     end
@@ -49,5 +48,18 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :ok
     assert_select 'img'
+  end
+
+  def test_index_show_images_in_reverse_chronological_order
+    Image.create!(url: 'https://1')
+    Image.create!(url: 'https://2')
+
+    get images_path
+
+    assert_response :ok
+    assert_select 'img' do |elements|
+      assert_equal 'https://2', elements.first[:src]
+      assert_equal 'https://1', elements.last[:src]
+    end
   end
 end

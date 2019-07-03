@@ -1,2 +1,8 @@
-<h1> hello world</h1>
 <a href=<%= new_image_path %>>submit link</a>
+<ul>
+  <% @images.each do |image| %>
+    <li>
+      <img src=<%= image.url %>>
+    </li>
+  <% end %>
+</ul>
