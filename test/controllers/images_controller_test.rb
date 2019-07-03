@@ -10,4 +10,12 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       assert_select '[href=?]', new_image_path
     end
   end
+
+  test 'Should get images new action' do
+    get new_image_path
+
+    assert_response :ok
+    assert_select 'form input[name="image[url]"]'
+    assert_select 'form input[type=submit]'
+  end
 end
