@@ -14,6 +14,11 @@ class ImagesController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+  def show
+    @image = Image.find(params[:id])
+  end
+
   private
 
   def image_params

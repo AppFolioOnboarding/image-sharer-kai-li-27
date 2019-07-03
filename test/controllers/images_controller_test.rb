@@ -41,4 +41,13 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert_select 'form input[name="image[url]"]'
   end
+
+  test 'Should dipslay correct image' do
+    image = Image.create!(url: 'https://asasdf')
+
+    get image_path(image)
+
+    assert_response :ok
+    assert_select 'img'
+  end
 end
