@@ -49,6 +49,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :ok
     assert_select 'img'
+    assert_select 'label.badge', 0
   end
 
   def test_index_show_images_in_reverse_chronological_order
@@ -62,5 +63,14 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       assert_equal 'https://2', elements.first[:src]
       assert_equal 'https://1', elements.last[:src]
     end
+  end
+
+  def test_show_has_tag
+    image = Image.create!(url: 'https://a', tag_list: 'tag')
+
+    get image_path(image)
+
+    assert_response :ok
+    assert_select 'label.badge', count: 1, text: 'tag'
   end
 end
