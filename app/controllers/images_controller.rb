@@ -1,6 +1,11 @@
 class ImagesController < ApplicationController
   def index
-    @images = Image.order('created_at DESC')
+    tag = params[:tag]
+    @images = if tag.present?
+                Image.tagged_with(tag).order(created_at: :desc)
+              else
+                Image.order(created_at: :desc)
+              end
   end
 
   def new
