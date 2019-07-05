@@ -82,8 +82,12 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     get images_path
 
     assert_response :ok
-    assert_select 'img[src="https://a"] ~ label.badge', count: 1, text: 'tag1'
-    assert_select 'img[src="https://b"] ~ label.badge', count: 1, text: 'tag2'
+    assert_select "img[src='https://a'] ~ label.badge > a[href='#{images_path(tag: 'tag1')}']",
+                  count: 1,
+                  text: 'tag1'
+    assert_select "img[src='https://b'] ~ label.badge > a[href='#{images_path(tag: 'tag2')}']",
+                  count: 1,
+                  text: 'tag2'
     assert_select 'img[src="https://c"]'
     assert_select 'img[src="https://c"] ~ label.badge', 0
   end

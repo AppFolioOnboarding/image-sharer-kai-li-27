@@ -5,7 +5,9 @@
       <img src=<%= image.url %> class='image'>
       <br>
       <% image.tag_list.each do |tag| %>
-        <label class='badge badge-secondary'><%= tag %></label>
+        <label class='badge badge-secondary'>
+          <%= link_to tag, images_path(tag: tag) %>
+        </label>
       <% end %>
     </li>
   <% end %>
