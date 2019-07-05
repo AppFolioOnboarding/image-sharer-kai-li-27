@@ -15,6 +15,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :ok
     assert_select 'form input[name="image[url]"]'
+    assert_select 'input[name="image[tag_list]"]', 1
     assert_select 'form input[type=submit]'
   end
 
@@ -48,6 +49,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :ok
     assert_select 'img'
+    assert_select 'label.badge', 0
   end
 
   def test_index_show_images_in_reverse_chronological_order
@@ -61,5 +63,28 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       assert_equal 'https://2', elements.first[:src]
       assert_equal 'https://1', elements.last[:src]
     end
+  end
+
+  def test_show_has_tag
+    image = Image.create!(url: 'https://a', tag_list: 'tag')
+
+    get image_path(image)
+
+    assert_response :ok
+    assert_select 'label.badge', count: 1, text: 'tag'
+  end
+
+  def test_index_has_tags
+    Image.create!(url: 'https://a', tag_list: 'tag1')
+    Image.create!(url: 'https://b', tag_list: 'tag2')
+    Image.create!(url: 'https://c')
+
+    get images_path
+
+    assert_response :ok
+    assert_select 'img[src="https://a"] ~ label.badge', count: 1, text: 'tag1'
+    assert_select 'img[src="https://b"] ~ label.badge', count: 1, text: 'tag2'
+    assert_select 'img[src="https://c"]'
+    assert_select 'img[src="https://c"] ~ label.badge', 0
   end
 end

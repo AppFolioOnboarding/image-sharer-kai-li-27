@@ -6,6 +6,11 @@ AllCops:
     - 'vendor/**/*'
     - 'node_modules/**/*'
     - 'bin/*'
+    - 'db/migrate/20190703231910_add_missing_indexes_on_taggings.acts_as_taggable_on_engine.rb'
+    - 'db/migrate/20190703231905_acts_as_taggable_on_migration.acts_as_taggable_on_engine.rb'
+    - 'db/migrate/20190703231909_change_collation_for_tag_names.acts_as_taggable_on_engine.rb'
+    - 'db/migrate/20190703231908_add_missing_taggable_index.acts_as_taggable_on_engine.rb'
+    - 'db/migrate/20190703231906_add_missing_unique_indices.acts_as_taggable_on_engine.rb'
   TargetRubyVersion: 2.5
 
 Layout/IndentArray:

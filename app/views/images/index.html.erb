@@ -3,6 +3,10 @@
   <% @images.each do |image| %>
     <li>
       <img src=<%= image.url %> class='image'>
+      <br>
+      <% image.tag_list.each do |tag| %>
+        <label class='badge badge-secondary'><%= tag %></label>
+      <% end %>
     </li>
   <% end %>
 </ul>
