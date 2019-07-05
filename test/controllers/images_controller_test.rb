@@ -73,4 +73,18 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_select 'label.badge', count: 1, text: 'tag'
   end
+
+  def test_index_has_tags
+    Image.create!(url: 'https://a', tag_list: 'tag1')
+    Image.create!(url: 'https://b', tag_list: 'tag2')
+    Image.create!(url: 'https://c')
+
+    get images_path
+
+    assert_response :ok
+    assert_select 'img[src="https://a"] ~ label.badge', count: 1, text: 'tag1'
+    assert_select 'img[src="https://b"] ~ label.badge', count: 1, text: 'tag2'
+    assert_select 'img[src="https://c"]'
+    assert_select 'img[src="https://c"] ~ label.badge', 0
+  end
 end
