@@ -15,6 +15,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :ok
     assert_select 'form input[name="image[url]"]'
+    assert_select 'input[name="image[tag_list]"]', 1
     assert_select 'form input[type=submit]'
   end
 
