@@ -91,4 +91,16 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'img[src="https://c"]'
     assert_select 'img[src="https://c"] ~ label.badge', 0
   end
+
+  def test_index_filter_by_tags
+    Image.create!(url: 'https://a', tag_list: 'tag1')
+    Image.create!(url: 'https://b', tag_list: 'tag2')
+    Image.create!(url: 'https://c')
+
+    get images_path(tag: 'tag1')
+
+    assert_response :ok
+    assert_select 'img[src="https://a"]'
+    assert_select 'img', 1
+  end
 end
