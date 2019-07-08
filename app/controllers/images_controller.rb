@@ -31,6 +31,8 @@ class ImagesController < ApplicationController
     @image = Image.find_by(id: params[:id])
     if @image.present?
       @image.destroy
+    else
+      flash[:notice] = 'Image could not be found'
     end
     redirect_to images_path
   end

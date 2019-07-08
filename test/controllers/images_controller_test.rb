@@ -121,6 +121,9 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     end
     
     assert_redirected_to images_path
+
+    get images_path
+    assert_select '#flashError', 1
   end
 
   def test_index_has_delete_button
