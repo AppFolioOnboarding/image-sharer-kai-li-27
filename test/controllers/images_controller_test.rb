@@ -122,4 +122,12 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     
     assert_redirected_to images_path
   end
+
+  def test_index_has_delete_button
+    image = Image.create!(url: 'https://a', tag_list: 'tag1')
+
+    get images_path
+
+    assert_select "a[href='#{image_path(image)}'][data-method=delete]"
+  end
 end
