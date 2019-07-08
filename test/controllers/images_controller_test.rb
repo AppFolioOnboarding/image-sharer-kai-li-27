@@ -103,4 +103,23 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'img[src="https://a"]'
     assert_select 'img', 1
   end
+
+  def test_delete_image
+    image = Image.create!(url: 'https://a', tag_list: 'tag1')
+
+    assert_difference 'Image.count', -1 do
+      delete image_path(image)
+    end
+
+    assert_redirected_to images_path
+    assert_nil Image.find_by(id: image.id)
+  end
+
+  def test_delete_image_not_found
+    assert_no_difference 'Image.count' do
+      delete image_path(1)
+    end
+    
+    assert_redirected_to images_path
+  end
 end
