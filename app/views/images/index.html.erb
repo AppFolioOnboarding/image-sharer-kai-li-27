@@ -1,8 +1,12 @@
 <a href=<%= new_image_path %>>submit link</a>
 <ul>
+  <% if flash[:notice] %>
+    <div class="badge badge-danger w-25" id="flashError"><%= flash[:notice] %></div>
+  <% end %>
   <% @images.each do |image| %>
     <li>
       <img src=<%= image.url %> class='image'>
+      <%= link_to 'Delete', image_path(image), method: 'delete', data: { confirm: 'Are you sure to delete this image?' } %>
       <br>
       <% image.tag_list.each do |tag| %>
         <label class='badge badge-secondary'>
