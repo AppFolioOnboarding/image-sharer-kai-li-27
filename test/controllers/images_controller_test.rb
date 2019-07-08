@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# rubocop :disable Metrics/ClassLength
 class ImagesControllerTest < ActionDispatch::IntegrationTest
   test 'Should get images index page' do
     get images_path
@@ -119,7 +120,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference 'Image.count' do
       delete image_path(1)
     end
-    
+
     assert_redirected_to images_path
 
     get images_path
@@ -134,3 +135,4 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href='#{image_path(image)}'][data-method=delete]"
   end
 end
+# rubocop :enable Metrics/ClassLength
