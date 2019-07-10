@@ -6,11 +6,13 @@ import React from 'react';
 import sinon from 'sinon';
 import * as api from '../../utils/helper';
 import CommentsForm from '../../components/CommentsForm';
+import FeedbackStore from '../../stores/feedbackStore';
 
 describe('<CommentsForm />', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<CommentsForm />);
+    const feedbackStore = new FeedbackStore();
+    wrapper = shallow(<CommentsForm feedbackStore={feedbackStore} />);
   });
 
   afterEach(() => {
@@ -36,13 +38,6 @@ describe('<CommentsForm />', () => {
     assert.strictEqual(wrapper.find('Button').children().text(), 'Submit');
 
     assert.strictEqual(wrapper.find('Alert').length, 0);
-
-    assert.deepStrictEqual(wrapper.instance().state, {
-      name: '',
-      comments: '',
-      failed: false,
-      submissionMessage: ''
-    });
   });
 
   it('should show error when submission fails', () => {
